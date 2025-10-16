@@ -68,3 +68,47 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## github
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/chenpo3725/keelung.git
+git push -u origin main
+
+
+這組指令是在「本機初始化一個 Git 倉庫，建立第一次提交，將預設分支改名為 main，綁定到 GitHub 遠端，然後把 main 首次推送上去
+一、每行指令在做什麼？（逐步解釋）
+
+git init
+在目前資料夾建立一個全新的 Git 倉庫（產生 .git/ 目錄，開始可以追蹤版本）。📁
+— 參考：Git 官方文件。
+Git
++2
+GitHub
++2
+
+git add README.md
+把 README.md 加入暫存區（stage），準備提交。🗂️
+— 參考：GitHub 對 README 的說明。
+GitHub Docs
+
+git commit -m "first commit"
+建立第一次提交，訊息為 first commit。🧱
+
+git branch -M main
+將目前分支強制改名為 main（-M 會自動覆蓋同名分支）。🔀
+— 延伸：也可設定日後新倉庫預設分支為 main：git config --global init.defaultBranch main。
+GitHub Docs
++1
+
+git remote add origin https://github.com/chenpo3725/keelung.git
+新增名為 origin 的遠端，指向你的 GitHub 倉庫 URL（HTTPS）。🌐
+— 參考：遠端的基本概念與 URL 格式。
+GitHub Docs
++1
+
+git push -u origin main
+把 main 推送到遠端 origin，並用 -u 將上游追蹤綁定（之後只要 git push / git pull 就能作用在 main）。🚀
+— 參考：git push 用法。
+GitHub Docs
