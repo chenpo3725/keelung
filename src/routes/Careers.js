@@ -27,7 +27,7 @@ const Careers = () => {
     localStorage.setItem('accessToken', credential);
     const payload = {
         action: 'add',
-        idToken,
+        idToken:credential,
         name: 'name',   // 你要寫的資料（若有實際輸入欄位可改為對應 state）
         email: 'email', // 建議讓後端用 tokenInfo.email 為準
     };
