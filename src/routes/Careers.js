@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 const Careers = () => {
@@ -16,19 +17,25 @@ const Careers = () => {
   const handleSuccess = async (response) => {
     console.log('登录成功，响应数据：', response);
     const { credential } = response; // credential即为访问令牌（Access Token）
-
+/*     const payload = jwtDecode(credential); // credential 是 GoogleLogin 回傳的 JWT
+    const { email, email_verified, aud, name, picture, sub } = payload;
+    // 建議：檢查 aud 是否等於你的 Client ID
+    if (aud !== process.env.REACT_APP_GOOGLE_CLIENT_ID) {
+    console.warn('aud mismatch');
+    } */
     // 1. 存储令牌（建议使用localStorage或专用状态管理库）
     localStorage.setItem('accessToken', credential);
 
     // 2. 携带令牌请求资源服务器API（示例：获取Google用户信息）
     try {
-      const userResponse = await axios.get(
-        'https://www.googleapis.com/oauth2/v3/userinfo',
-        {
-          headers: { Authorization: `Bearer ${credential}` },
-        }
-      );
-      console.log('用户信息：', userResponse.data);
+        const Response = await axios.post('https://script.google.com/macros/s/AKfycbx8CGXMrEKLaJ9-tSKm1a_Gb5Np757XWPNCh2ikmqVODIEsM7WKJRjIC4GWMkAzmc0k/exec', {
+        action: 'add',
+        idToken: credential,
+        name:'name',   // 你要寫的資料
+        email:'email',  // 你要寫的資料
+        });
+      setAuthData(Response.data);
+      console.log('用户信息：', Response.data);
       // 可将用户信息存入全局状态（如Redux、Context）
     } catch (error) {
       console.error('获取用户信息失败：', error);
@@ -55,7 +62,11 @@ return (
       shape="rectangular" // 按钮形状：rectangular（默认）、pill、circle、square
       theme="filled_black" // 按钮主题：filled_black（默认）、filled_blue、outline、standard
     />
-
+           {authData && (
+             <div>
+               <p>Credential: {authData.name}</p>
+               <p>Select By: {authData.email}</p>             </div>
+           )} 
  {/*           <GoogleLogin
              onSuccess={(credentialResponse) => {
                setAuthData(credentialResponse);

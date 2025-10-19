@@ -10,7 +10,7 @@ const SPREADSHEET_ID = '1a97auTLdeJs97drk2X-xacsww1mqD2YN2HwNqj6wD6I';
 const SHEET_NAME = '工作表1';
 
 // 你的 Google Identity Services 的 Web client_id（前端公開沒問題，但伺服端要核對 aud）
-const CLIENT_ID = 'REPLACE_WITH_YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
+const CLIENT_ID = '381449379125-2ukt76od388nsb2ronls8r1p1ps61qhb.apps.googleusercontent.com';
 
 // （選配）允許的網域或信箱白名單
 const ALLOWED_HD = '';           // 例：'example.com'；留空則不限制
