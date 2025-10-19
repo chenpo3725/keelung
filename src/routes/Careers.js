@@ -2,7 +2,7 @@ import { useState } from "react";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 
 
-const clientId = process.env.VITE_GOOGLE_CLIENT_ID;
+const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 const Careers = () => {
     const [authData, setAuthData] = useState(null);
 
