@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
-import jwtDecode from 'jwt-decode';
+
 
 const clientId = process.env.VITE_GOOGLE_CLIENT_ID;
 const Careers = () => {
