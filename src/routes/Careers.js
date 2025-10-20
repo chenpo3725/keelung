@@ -33,11 +33,19 @@ const Careers = () => {
     };
     // 2. 携带令牌请求资源服务器API（示例：获取Google用户信息）
     try {
-        const { data } = await axios.post(
-        'https://script.google.com/macros/s/AKfycbx8CGXMrEKLaJ9-tSKm1a_Gb5Np757XWPNCh2ikmqVODIEsM7WKJRjIC4GWMkAzmc0k/exec',
-        JSON.stringify(payload),
-        { headers: { 'Content-Type': 'text/plain;charset=utf-8' } } // 關鍵：避免預檢
-        );
+        // const { data } = await axios.post(
+        // 'https://script.google.com/macros/s/AKfycbx8CGXMrEKLaJ9-tSKm1a_Gb5Np757XWPNCh2ikmqVODIEsM7WKJRjIC4GWMkAzmc0k/exec',
+        // JSON.stringify(payload),
+        // { headers: { 'Content-Type': 'text/plain;charset=utf-8' } } // 關鍵：避免預檢
+        // );
+    fetch('https://script.google.com/macros/s/AKfycbx8CGXMrEKLaJ9-tSKm1a_Gb5Np757XWPNCh2ikmqVODIEsM7WKJRjIC4GWMkAzmc0k/exec', {
+      redirect: "follow",
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8",
+      },
+    })
       setAuthData(data);
       console.log('用户信息：', data);
       // 可将用户信息存入全局状态（如Redux、Context）
