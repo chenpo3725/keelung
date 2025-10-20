@@ -23,36 +23,47 @@ const Careers = () => {
     if (aud !== process.env.REACT_APP_GOOGLE_CLIENT_ID) {
     console.warn('aud mismatch');
     } */
-    // 1. 存储令牌（建议使用localStorage或专用状态管理库）
-    localStorage.setItem('accessToken', credential);
-    const payload = {
-        action: 'add',
-        idToken:credential,
-        name: 'name',   // 你要寫的資料（若有實際輸入欄位可改為對應 state）
-        email: 'email', // 建議讓後端用 tokenInfo.email 為準
-    };
+    // // 1. 存储令牌（建议使用localStorage或专用状态管理库）
+    // localStorage.setItem('accessToken', credential);
+    // const payload = {
+    //     action: 'add',
+    //     idToken:credential,
+    //     name: 'name',   // 你要寫的資料（若有實際輸入欄位可改為對應 state）
+    //     email: 'email', // 建議讓後端用 tokenInfo.email 為準
+    // };
     // 2. 携带令牌请求资源服务器API（示例：获取Google用户信息）
-    try {
+    // try {
         // const { data } = await axios.post(
         // 'https://script.google.com/macros/s/AKfycbx8CGXMrEKLaJ9-tSKm1a_Gb5Np757XWPNCh2ikmqVODIEsM7WKJRjIC4GWMkAzmc0k/exec',
         // JSON.stringify(payload),
         // { headers: { 'Content-Type': 'text/plain;charset=utf-8' } } // 關鍵：避免預檢
         // );
-    fetch('https://script.google.com/macros/s/AKfycbx8CGXMrEKLaJ9-tSKm1a_Gb5Np757XWPNCh2ikmqVODIEsM7WKJRjIC4GWMkAzmc0k/exec', {
-      redirect: "follow",
-      method: "POST",
-      body: JSON.stringify(payload),
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8",
-      },
-    })
-      setAuthData(data);
-      console.log('用户信息：', data);
-      // 可将用户信息存入全局状态（如Redux、Context）
-    } catch (error) {
-      console.error('获取用户信息失败：', error);
-    }
+const handleSuccess = async (response) => {
+  const { credential } = response;
+  const payload = {
+    action: 'add',
+    idToken: credential,
+    name: 'name',
+    email: 'email',
   };
+
+  try {
+    const res = await fetch(
+      'https://script.google.com/macros/s/AKfycbx8CGXMrEKLaJ9-tSKm1a_Gb5Np757XWPNCh2ikmqVODIEsM7WKJRjIC4GWMkAzmc0k/exec',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload),
+      }
+    );
+    // 注意：即使寫成這樣，GAS 仍會被 CORS 擋，res.json() 可能拋錯
+    const data = await res.json();
+    setAuthData(data);
+    console.log('伺服器回應：', data);
+  } catch (error) {
+    console.error('呼叫後端失敗：', error);
+  }
+};
 
   // 登录失败回调
   const handleError = (error) => {
